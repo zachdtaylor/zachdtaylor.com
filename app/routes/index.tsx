@@ -1,4 +1,5 @@
 import type { MetaFunction } from "remix";
+import { Link } from "remix";
 import NavBar from "~/components/navbar";
 import Layout from "~/components/layout";
 
@@ -24,12 +25,31 @@ function HomeHero() {
   );
 }
 
+type LinkCardProps = {
+  to: string;
+  children: React.ReactNode;
+};
+
+function LinkCard({ to, children }: LinkCardProps) {
+  return (
+    <Link to={to}>
+      <div className="p-24 text-center rounded-md bg-gray-700 text-5xl h-full">
+        {children}
+      </div>
+    </Link>
+  );
+}
+
 export default function Index() {
   return (
     <div>
       <NavBar />
       <Layout>
         <HomeHero />
+        <div className="grid grid-flow-row md:grid-cols-2 gap-4">
+          <LinkCard to="/blog">Read My Blog</LinkCard>
+          <LinkCard to="/about">About Me</LinkCard>
+        </div>
       </Layout>
     </div>
   );
