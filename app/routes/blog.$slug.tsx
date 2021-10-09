@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import type { MetaFunction } from "remix";
 
 export let meta: MetaFunction = () => {
@@ -8,5 +9,7 @@ export let meta: MetaFunction = () => {
 };
 
 export default function BlogPost() {
-  return <div>Hello there</div>;
+  const params = useParams();
+  console.log(params.slug);
+  return <div>{params.slug}</div>;
 }

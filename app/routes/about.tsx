@@ -3,12 +3,12 @@ import NavBar from "~/components/navbar";
 
 export let meta: MetaFunction = () => {
   return {
-    title: "Home",
-    description: "Come see what Zach Taylor has to offer.",
+    title: "About",
+    description: "Learn more about Zach Taylor.",
   };
 };
 
-export default function Index() {
+export default function About() {
   return (
     <div>
       <NavBar />
