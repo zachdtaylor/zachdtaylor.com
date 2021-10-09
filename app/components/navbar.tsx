@@ -29,7 +29,9 @@ export default function NavBar() {
       </div>
       <ul className="flex flex-row">
         {LINKS.map((link) => (
-          <NavBarLink to={link.to}>{link.name}</NavBarLink>
+          <NavBarLink key={link.to} to={link.to}>
+            {link.name}
+          </NavBarLink>
         ))}
       </ul>
     </nav>
