@@ -12,7 +12,7 @@ export let meta: MetaFunction = () => {
 
 function HomeHero() {
   return (
-    <div className="py-5 grid grid-flow-row md:grid-cols-2">
+    <div className="py-36 grid grid-flow-row md:grid-cols-2">
       <div>
         <p className="text-4xl mb-2">
           Hi, I'm <span className="text-purple-400">Zach</span> Taylor.
@@ -46,8 +46,9 @@ export default function Index() {
       <NavBar />
       <Layout>
         <HomeHero />
-        <div className="grid grid-flow-row md:grid-cols-2 gap-4">
+        <div className="py-36 grid grid-flow-row md:grid-cols-2 gap-4">
           <LinkCard to="/blog">Read My Blog</LinkCard>
+          <LinkCard to="/projects">See My Projects</LinkCard>
           <LinkCard to="/talks">Watch My Talks</LinkCard>
           <LinkCard to="/about">About Me</LinkCard>
         </div>

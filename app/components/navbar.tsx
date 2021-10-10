@@ -3,6 +3,7 @@ import { Link } from "remix";
 
 const LINKS = [
   { name: "Blog", to: "/blog" },
+  { name: "Projects", to: "/projects" },
   { name: "Talks", to: "/talks" },
   { name: "About", to: "/about" },
 ];
@@ -24,7 +25,7 @@ function NavBarLink({ to, children }: NavBarItemProps) {
 
 export default function NavBar() {
   return (
-    <nav className="flex flex-row p-10 px-16">
+    <nav className="flex flex-row p-10 px-8 md:px-16">
       <div className="pr-10 py-2 text-2xl">
         <Link to="/">Zach Taylor</Link>
       </div>
