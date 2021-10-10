@@ -12,12 +12,12 @@ export let meta: MetaFunction = () => {
 
 function HomeHero() {
   return (
-    <div className="py-5 flex flex-row">
+    <div className="py-5 grid grid-flow-row md:grid-cols-2">
       <div>
         <p className="text-4xl mb-2">
           Hi, I'm <span className="text-purple-400">Zach</span> Taylor.
         </p>
-        <p className="text-gray-400 text-xl">
+        <p className="text-gray-500 dark:text-gray-400 text-xl">
           I'm passionate about a lot of things. Code is one of my favorites.
         </p>
       </div>
@@ -33,7 +33,7 @@ type LinkCardProps = {
 function LinkCard({ to, children }: LinkCardProps) {
   return (
     <Link to={to}>
-      <div className="p-24 text-center rounded-md bg-gray-700 text-5xl h-full">
+      <div className="p-24 text-center hover:text-purple-400 rounded-md bg-gray-100 dark:bg-gray-700 text-5xl h-full">
         {children}
       </div>
     </Link>
@@ -48,6 +48,7 @@ export default function Index() {
         <HomeHero />
         <div className="grid grid-flow-row md:grid-cols-2 gap-4">
           <LinkCard to="/blog">Read My Blog</LinkCard>
+          <LinkCard to="/talks">Watch My Talks</LinkCard>
           <LinkCard to="/about">About Me</LinkCard>
         </div>
       </Layout>

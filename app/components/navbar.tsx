@@ -3,6 +3,7 @@ import { Link } from "remix";
 
 const LINKS = [
   { name: "Blog", to: "/blog" },
+  { name: "Talks", to: "/talks" },
   { name: "About", to: "/about" },
 ];
 
