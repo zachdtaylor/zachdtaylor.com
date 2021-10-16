@@ -1,5 +1,7 @@
-import type { MetaFunction } from "remix";
-import NavBar from "~/components/navbar";
+import type { MetaFunction, LoaderFunction } from "remix";
+import { useLoaderData } from "remix";
+
+import Layout from "~/components/layout";
 
 export let meta: MetaFunction = () => {
   return {
@@ -8,10 +10,17 @@ export let meta: MetaFunction = () => {
   };
 };
 
+export let loader: LoaderFunction = () => {
+  return [];
+};
+
 export default function Blog() {
+  const posts = useLoaderData();
   return (
-    <div>
-      <NavBar />
-    </div>
+    <Layout>
+      {posts.map((post: any) => (
+        <p key={post.title}>{JSON.stringify(post)}</p>
+      ))}
+    </Layout>
   );
 }

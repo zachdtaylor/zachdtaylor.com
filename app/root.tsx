@@ -1,5 +1,6 @@
 import type { LinksFunction } from "remix";
 import { Meta, Links, Scripts, LiveReload, Outlet } from "remix";
+import NavBar from "./components/navbar";
 
 import tailwindUrl from "./styles/tailwind.css";
 
@@ -20,7 +21,7 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="dark:text-white dark:bg-gray-800 text-gray-700">
         {children}
 
-        <Scripts />
+        {/* <Scripts /> */}
         {process.env.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
@@ -30,6 +31,7 @@ function Document({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <Document>
+      <NavBar />
       <Outlet />
     </Document>
   );

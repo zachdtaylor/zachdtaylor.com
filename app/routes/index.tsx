@@ -1,6 +1,5 @@
 import type { MetaFunction } from "remix";
 import { Link } from "remix";
-import NavBar from "~/components/navbar";
 import Layout from "~/components/layout";
 import Logo from "~/components/logo";
 
@@ -44,17 +43,14 @@ function LinkCard({ to, children }: LinkCardProps) {
 
 export default function Index() {
   return (
-    <div>
-      <NavBar />
-      <Layout>
-        <HomeHero />
-        <div className="py-36 grid grid-flow-row md:grid-cols-2 gap-4">
-          <LinkCard to="/blog">Read My Blog</LinkCard>
-          <LinkCard to="/projects">See My Projects</LinkCard>
-          <LinkCard to="/talks">Watch My Talks</LinkCard>
-          <LinkCard to="/about">About Me</LinkCard>
-        </div>
-      </Layout>
-    </div>
+    <Layout>
+      <HomeHero />
+      <div className="py-36 grid grid-flow-row md:grid-cols-2 gap-4">
+        <LinkCard to="/blog">Read My Blog</LinkCard>
+        <LinkCard to="/projects">See My Projects</LinkCard>
+        <LinkCard to="/talks">Watch My Talks</LinkCard>
+        <LinkCard to="/about">About Me</LinkCard>
+      </div>
+    </Layout>
   );
 }

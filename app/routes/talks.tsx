@@ -1,5 +1,4 @@
 import type { MetaFunction } from "remix";
-import NavBar from "~/components/navbar";
 
 export let meta: MetaFunction = () => {
   return {
@@ -9,9 +8,5 @@ export let meta: MetaFunction = () => {
 };
 
 export default function Talks() {
-  return (
-    <div>
-      <NavBar />
-    </div>
-  );
+  return <div></div>;
 }
