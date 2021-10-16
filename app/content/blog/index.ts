@@ -1,5 +1,6 @@
 import * as inheritanceInJavascript from "./inheritance-in-javascript.mdx";
 import * as stableFormsInRemix from "./stable-forms-in-remix.mdx";
+import * as improvingReactCustomHooks from "./improving-react-custom-hooks.mdx";
 
 type ModuleBlogPost = {
   filename: string;
@@ -14,6 +15,7 @@ type ModuleBlogPost = {
 
 const posts: Array<ModuleBlogPost> = [
   stableFormsInRemix,
+  improvingReactCustomHooks,
   inheritanceInJavascript,
 ];
 
