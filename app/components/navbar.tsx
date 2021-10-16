@@ -26,7 +26,7 @@ function NavBarLink({ to, children }: NavBarItemProps) {
 export default function NavBar() {
   return (
     <nav className="flex flex-row p-10 px-8 md:px-20">
-      <div className="pr-10 py-2 text-2xl">
+      <div className="pr-12 py-2 text-2xl">
         <Link to="/">Zach Taylor</Link>
       </div>
       <ul className="flex flex-row">

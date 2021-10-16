@@ -1,0 +1,61 @@
+---
+meta:
+  title: "Stable Forms in Remix"
+  description: "In this post I explain how to make your Remix forms more stable."
+  date: "June 15, 2021"
+---
+
+Data mutations in Remix are done with HTML forms, and Remix allows you to upgrade your forms with JavaScript to provide a better UX.
+
+Like anything in the UI, forms might be used in a way you don't expect. What happens if the user spams the submit button and causes several form submits? If you don't handle this, users could inadvertently (or intentionally) break something. In this post, I want to talk about how you can make your forms more stable and less susceptible to these types of problems. I'll use my Twitter dashboard app from [my last post](https://dev.to/zachtylr21/building-a-simple-search-ui-with-remix-57da) as an example.
+
+## Case 1 - The Native HTML `<form>`
+
+In the case of the native HTML `<form>`, you don't really have control over what happens client-side; it's up to the browser. Some (all?) browsers take measures to ensure that a form can't be submitted again while the first submission is still pending.
+
+For example, in Chrome, if you type something in the search bar and submit the form 3 times quickly, the browser automatically cancels the first two requests and only sends the last one.
+
+![Screen Shot 2021-06-15 at 12.42.17 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yep6wceu2eooxbuh1obz.png)
+
+It's nice that Chrome takes care of cancelling the first two requests for us. I'm not sure if this behavior is consistent across browsers. In any case, you'll want to make sure that your Remix actions and loaders can safely be called multiple times with the same form data / search parameters.
+
+For example, if the user submits a form several times to delete something, you'll want to handle errors that may arise from deleting something that's already been deleted. If the user submits a form several times to create something, you might want to make sure they can't create multiple copies.
+
+A lot of how you handle this depends on the nature of your app, which is why I'm being kind of vague. Just make sure you handle multiple form submits on the server in a way that makes sense for your app.
+
+Going on kind of a tangent here, but handling things well server side is always important because in the end, we don't really have control over how a request arrives at our server. We only have control over what we do with it.
+
+The conclusion here is that if we use the native `<form>` (or if the user has JavaScript disabled), there's nothing we can really do but leave it up to the browser on the front end and make sure we handle things server-side in a secure way that makes sense (which we should be doing anyway :smile:).
+
+## Case 2 - Remix's Enhanced `<Form>`
+
+Now say we want to upgrade to Remix's `<Form>`, taking control out of the browser's hands and putting it in ours with JavaScript. If we simply change `<form>` to `<Form>`, the user will be able to submit the form again while the first submission is still pending. This is not ideal, because we are now putting more load on our server and probably slowing down the user's browser.
+
+![Screen Shot 2021-06-15 at 1.06.24 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/y998olkaalitq4yyt5hr.png)
+
+A lot of people's first instinct in this case is to disable the submit button while the form is pending. The problem with this is that [disabling a button is not app logic](https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i#:~:text=Disabling%20a%20button%20is%20not%20logic.,button%20will%20have%20no%20effect.), and the user can get around it. For example, the user might submit the form with their enter key. Good luck disabling _that_ button! :stuck_out_tongue_winking_eye:
+
+A more stable pattern is to treat the form as a state machine! The state machine in this case is quite simple. The form starts in an idle state, and when the user submits the form (by whatever means they choose), it goes to the pending state. While in the pending state, it should be impossible to submit the form again. Then, once the response comes back, the form goes back to the idle state and can be submitted again.
+
+![Screen Shot 2021-06-15 at 1.21.28 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/exglsqpzeuchrnjtk5vm.png)
+
+So how do we implement this state machine in Remix? Remix provides a hook called `usePendingFormSubmit` that allows us to determine if the form is in the pending state or not. Once we've determined what state the form is in, we can either prevent or allow form submission accordingly, like this.
+
+```jsx
+const pendingForm = usePendingFormSubmit()
+const pending = !!pendingForm
+
+...
+
+<Form onSubmit={(event) => pending ? event.preventDefault() : null}>
+  ...
+</Form>
+```
+
+In Remix, calling `event.preventDefault()` prevents the form from submitting (this is the exact same way you prevent a regular HTML form from submitting, by the way!). So our logic is: if the form is in the pending state, call `event.preventDefault()` and prevent the form submit. If the form is in the idle state, do nothing and allow the form submit.
+
+Now the app logic is solid and will prevent re-submission whether we disable the submit button or not, or if there's no submit button at all!
+
+Here is a full demo of everything discussed above.
+
+I hope this was helpful!

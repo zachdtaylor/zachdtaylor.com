@@ -14,7 +14,7 @@ export default function BlogPost({ Component, meta }: BlogPostProps) {
   return (
     <ThinLayout>
       <div className="py-16">
-        <h1 className="text-4xl md:mx-16">{meta.title}</h1>
+        <h1 className="text-4xl">{meta.title}</h1>
         <p className="text-gray-500 dark:text-gray-400">{meta.date}</p>
       </div>
       <Component />

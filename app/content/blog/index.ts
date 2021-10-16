@@ -1,5 +1,6 @@
-import * as post1 from "./inheritance-in-javascript.mdx";
+import * as inheritanceInJavascript from "./inheritance-in-javascript.mdx";
+import * as stableFormsInRemix from "./stable-forms-in-remix.mdx";
 
-const posts: Array<any> = [post1];
+const posts: Array<any> = [stableFormsInRemix, inheritanceInJavascript];
 
 export default posts;

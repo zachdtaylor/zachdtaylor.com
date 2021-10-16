@@ -1,13 +1,18 @@
+pre,
+img {
+  @apply my-8 rounded-md;
+}
+
 pre {
-  @apply p-6 my-8 rounded-md overflow-x-auto;
+  @apply p-6 overflow-x-auto;
 }
 
 p {
-  @apply mb-4 md:mx-16 leading-8;
+  @apply mb-4 leading-8;
 }
 
 h2 {
-  @apply my-6 md:mx-16 text-2xl py-2;
+  @apply my-6 text-2xl py-2;
 }
 
 code {
