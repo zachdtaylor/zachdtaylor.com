@@ -1,7 +1,7 @@
 import type { MetaFunction, LoaderFunction } from "remix";
 import { useLoaderData, Link } from "remix";
 
-import { BlogLayout } from "~/components/layout";
+import { ThinLayout } from "~/components/layout";
 import posts from "~/content/blog";
 
 function postFromModule(mod: any) {
@@ -25,8 +25,8 @@ export let loader: LoaderFunction = () => {
 export default function Blog() {
   const posts = useLoaderData();
   return (
-    <BlogLayout>
-      <h1 className="text-3xl pb-8">Blog</h1>
+    <ThinLayout>
+      <h1 className="text-4xl py-16">Blog</h1>
       <ul>
         {posts.map((post: any) => (
           <li key={post.slug}>
@@ -37,6 +37,6 @@ export default function Blog() {
           </li>
         ))}
       </ul>
-    </BlogLayout>
+    </ThinLayout>
   );
 }
