@@ -1,18 +1,15 @@
 pre {
-  padding: 1.5rem;
-  margin: 1rem 0;
+  @apply p-6 my-4 rounded-md;
 }
 
 p {
-  margin: 1rem 0;
-  line-height: 1.75rem;
-}
-
-h1 {
-  font-size: 2rem;
-  padding: 1.5rem 0;
+  @apply mb-4 leading-7;
 }
 
 h2 {
-  font-size: 1.5rem;
+  @apply mb-2 text-2xl py-2;
+}
+
+code {
+  @apply bg-gray-100 dark:bg-gray-500 py-0.5 px-1.5 rounded-md;
 }

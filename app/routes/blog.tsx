@@ -1,7 +1,15 @@
 import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData } from "remix";
+import { useLoaderData, Link } from "remix";
 
-import Layout from "~/components/layout";
+import { BlogLayout } from "~/components/layout";
+import posts from "~/content/blog";
+
+function postFromModule(mod: any) {
+  return {
+    slug: mod.filename.replace(/\.mdx?$/, ""),
+    ...mod.attributes.meta,
+  };
+}
 
 export let meta: MetaFunction = () => {
   return {
@@ -11,16 +19,24 @@ export let meta: MetaFunction = () => {
 };
 
 export let loader: LoaderFunction = () => {
-  return [];
+  return posts.map(postFromModule);
 };
 
 export default function Blog() {
   const posts = useLoaderData();
   return (
-    <Layout>
-      {posts.map((post: any) => (
-        <p key={post.title}>{JSON.stringify(post)}</p>
-      ))}
-    </Layout>
+    <BlogLayout>
+      <h1 className="text-3xl pb-8">Blog</h1>
+      <ul>
+        {posts.map((post: any) => (
+          <li key={post.slug}>
+            <Link to={post.slug} className="text-2xl hover:text-purple-400">
+              {post.title}
+            </Link>
+            <p className="py-2">{post.description}</p>
+          </li>
+        ))}
+      </ul>
+    </BlogLayout>
   );
 }

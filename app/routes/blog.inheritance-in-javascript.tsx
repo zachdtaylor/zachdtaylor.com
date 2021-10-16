@@ -1,5 +1,5 @@
 import type { MetaFunction, LinksFunction } from "remix";
-import Layout from "~/components/layout";
+import { BlogLayout } from "~/components/layout";
 
 import Component, {
   attributes,
@@ -22,8 +22,9 @@ export let links: LinksFunction = () => {
 
 export default function InheritanceInJavascript() {
   return (
-    <Layout>
+    <BlogLayout>
+      <h1 className="text-3xl pb-8">{attributes.meta.title}</h1>
       <Component />
-    </Layout>
+    </BlogLayout>
   );
 }
