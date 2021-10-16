@@ -26,3 +26,11 @@ h2 {
 code {
   @apply bg-gray-100 dark:bg-gray-500 py-0.5 px-1.5 rounded-md;
 }
+
+blockquote {
+  @apply border-l-4 border-gray-500 pl-4 my-8;
+}
+
+blockquote p {
+  @apply leading-7;
+}
