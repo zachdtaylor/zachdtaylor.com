@@ -1,6 +1,7 @@
 import * as inheritanceInJavascript from "./inheritance-in-javascript.mdx";
 import * as stableFormsInRemix from "./stable-forms-in-remix.mdx";
 import * as improvingReactCustomHooks from "./improving-react-custom-hooks.mdx";
+import * as djangoInheritance from "./django-inheritance.mdx";
 
 type ModuleBlogPost = {
   filename: string;
@@ -17,6 +18,7 @@ const posts: Array<ModuleBlogPost> = [
   stableFormsInRemix,
   improvingReactCustomHooks,
   inheritanceInJavascript,
+  djangoInheritance,
 ];
 
 function postFromModule(mod: ModuleBlogPost): BlogPost {

@@ -7,6 +7,14 @@ pre {
   @apply p-6 overflow-x-auto;
 }
 
+ol {
+  @apply list-decimal my-8 mx-8;
+}
+
+li {
+  @apply py-1 leading-8;
+}
+
 p {
   @apply mb-4 leading-8;
 }
