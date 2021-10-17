@@ -1,4 +1,5 @@
 import type { MetaFunction } from "remix";
+import { ThinLayout } from "~/components/layout";
 
 export let meta: MetaFunction = () => {
   return {
@@ -8,5 +9,10 @@ export let meta: MetaFunction = () => {
 };
 
 export default function About() {
-  return <div></div>;
+  return (
+    <ThinLayout>
+      <h1 className="text-4xl py-16">About</h1>
+      <ul></ul>
+    </ThinLayout>
+  );
 }
