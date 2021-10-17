@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "remix";
+import { Link, NavLink } from "remix";
 
 const LINKS = [
   { name: "Blog", to: "/blog" },
@@ -16,9 +16,9 @@ type NavBarItemProps = {
 function NavBarLink({ to, children }: NavBarItemProps) {
   return (
     <li className="px-5 pt-3 pb-2 leading-none">
-      <Link to={to} className="text-lg">
+      <NavLink to={to} className="text-lg">
         {children}
-      </Link>
+      </NavLink>
     </li>
   );
 }
