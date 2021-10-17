@@ -15,7 +15,7 @@ type NavBarItemProps = {
 
 function NavBarLink({ to, children }: NavBarItemProps) {
   return (
-    <li className="px-5 pt-3 pb-2">
+    <li className="px-5 pt-3 pb-2 leading-none">
       <Link to={to} className="text-lg">
         {children}
       </Link>

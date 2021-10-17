@@ -26,31 +26,10 @@ function HomeHero() {
   );
 }
 
-type LinkCardProps = {
-  to: string;
-  children: React.ReactNode;
-};
-
-function LinkCard({ to, children }: LinkCardProps) {
-  return (
-    <Link to={to}>
-      <div className="p-24 text-center hover:text-purple-400 rounded-md bg-gray-100 dark:bg-gray-700 text-5xl h-full">
-        {children}
-      </div>
-    </Link>
-  );
-}
-
 export default function Index() {
   return (
     <Layout>
       <HomeHero />
-      <div className="py-36 grid grid-flow-row md:grid-cols-2 gap-4">
-        <LinkCard to="/blog">Read My Blog</LinkCard>
-        <LinkCard to="/projects">See My Projects</LinkCard>
-        <LinkCard to="/talks">Watch My Talks</LinkCard>
-        <LinkCard to="/about">About Me</LinkCard>
-      </div>
     </Layout>
   );
 }
