@@ -1,5 +1,6 @@
 import type { LinksFunction } from "remix";
 import { Meta, Links, Scripts, LiveReload, Outlet } from "remix";
+import Footer from "./components/footer";
 import NavBar from "./components/navbar";
 
 import tailwindUrl from "./styles/tailwind.css";
@@ -18,7 +19,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="dark:text-white dark:bg-gray-800 text-gray-700">
+      <body className="dark:text-white dark:bg-gray-800 text-gray-700 h-screen flex flex-col">
         {children}
 
         {/* <Scripts /> */}
@@ -32,7 +33,10 @@ export default function App() {
   return (
     <Document>
       <NavBar />
-      <Outlet />
+      <main className="mb-20">
+        <Outlet />
+      </main>
+      <Footer />
     </Document>
   );
 }
