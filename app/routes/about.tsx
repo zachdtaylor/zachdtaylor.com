@@ -1,5 +1,7 @@
-import type { MetaFunction } from "remix";
+import type { MetaFunction, LinksFunction } from "remix";
 import { ThinLayout } from "~/components/layout";
+import blogPostUrl from "~/styles/blog-post.css";
+import Component from "../content/about.mdx";
 
 export let meta: MetaFunction = () => {
   return {
@@ -8,11 +10,15 @@ export let meta: MetaFunction = () => {
   };
 };
 
+export let links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: blogPostUrl }];
+};
+
 export default function About() {
   return (
     <ThinLayout>
       <h1 className="text-4xl py-16">About</h1>
-      <ul></ul>
+      <Component />
     </ThinLayout>
   );
 }
