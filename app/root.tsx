@@ -19,7 +19,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="dark:text-white dark:bg-gray-800 text-gray-700 h-screen flex flex-col">
+      <body className="dark:text-white dark:bg-gray-800 text-gray-700 h-screen flex flex-col text-lg">
         {children}
 
         <Scripts />

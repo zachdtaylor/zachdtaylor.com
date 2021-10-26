@@ -34,3 +34,7 @@ blockquote {
 blockquote p {
   @apply leading-7;
 }
+
+main a {
+  @apply text-purple-400 hover:text-purple-500;
+}
