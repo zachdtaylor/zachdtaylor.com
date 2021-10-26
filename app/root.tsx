@@ -22,7 +22,7 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="dark:text-white dark:bg-gray-800 text-gray-700 h-screen flex flex-col">
         {children}
 
-        {/* <Scripts /> */}
+        <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>

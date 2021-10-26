@@ -1,6 +1,14 @@
-export default function Logo() {
+type LogoProps = {
+  className?: string;
+};
+
+export default function Logo({ className }: LogoProps) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 18 18">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-3 -3 18 18"
+      className={className}
+    >
       <polygon
         points="9.59,-.41 -.41,9.59 2.41,12.41 12.41,2.41"
         className="fill-current text-purple-600"
