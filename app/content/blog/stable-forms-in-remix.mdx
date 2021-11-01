@@ -1,7 +1,7 @@
 ---
 meta:
   title: "Stable Forms in Remix"
-  description: "In this post I explain how to make your Remix forms more stable."
+  description: "In this post, I explain how to make your Remix forms more stable."
   date: "June 15, 2021"
 ---
 
@@ -55,5 +55,7 @@ const pending = !!pendingForm
 In Remix, calling `event.preventDefault()` prevents the form from submitting (this is the exact same way you prevent a regular HTML form from submitting, by the way!). So our logic is: if the form is in the pending state, call `event.preventDefault()` and prevent the form submit. If the form is in the idle state, do nothing and allow the form submit.
 
 Now the app logic is solid and will prevent re-submission whether we disable the submit button or not, or if there's no submit button at all!
+
+[Here](https://www.youtube.com/watch?v=jGJKwFywP-0) is a full demo of everything discussed above.
 
 I hope this was helpful!

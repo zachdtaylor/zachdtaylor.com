@@ -1,0 +1,131 @@
+---
+meta:
+  date: "June 2, 2021"
+  title: "Building a Simple Search UI with Remix"
+  description: "This post is a tutorial on how to build a simple search UI with Remix. We build a search bar to filter through a list of tweets using HTML forms and URL search params."
+---
+
+One thing I love most about Remix is how it encourages you to take advantage of native web APIs. One such API is the native HTML `<form>`. In this post, I want to show you how you can use an HTML form in Remix to build a simple search UI.
+
+The project I'm working on right now is a Twitter dashboard app. One of the features of the app is that it lets you schedule tweets to be sent at a later time. Here's what the tweet scheduler looks like:
+
+![Screen Shot 2021-05-30 at 2.18.06 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fzf7nlxehjwqiby1ib16.png)
+
+You'll notice that we have a side bar containing all your scheduled tweets, and a large area on the right where you can see the contents of the tweet you clicked on. There is a search bar at the top of the side bar that lets you filter your scheduled tweets with a search query. That search bar is what we'll be implementing in this post.
+
+## The Route
+
+If you're not already familiar with Remix routes, basically a route represents a piece of the UI. But a route isn't just the UI; it's the data, styles, meta tags, form handlers, and everything else associated with that UI. Each route and all its pieces is defined by a file in your source code.
+
+The data piece of a route is defined by an exported function called `loader`. The `loader` will be called every time a `GET` request is made to that route.
+
+In the Twitter dashboard app, the side bar is represented by the route `/schedule`. When you make a `GET` request to `/schedule`, the loader is called, which returns all of your scheduled tweets:
+
+```typescript
+export let loader: LoaderFunction = () => {
+  return getAllTweets();
+};
+```
+
+You can then use Remix's `useLoaderData()` hook to grab that data in your component and display it:
+
+```jsx
+export default function Schedule() {
+  const data = useLoaderData();
+
+  return (
+    // Map through tweets and display them
+  )
+}
+```
+
+## The Search Bar
+
+So, the search bar. When building something in Remix, the first thing to do is ask, "how does the browser do this by default?" Well, browsers are capable of sending requests to your server using forms. By default, an HTML `<form>` sends data in the search parameters of a `GET` request to the current URL. So, if we wrap the search bar in a `<form>` like this
+
+```jsx
+<form>
+  ...
+  <input type="text" name="query" placeholder="Search tweets..." />
+</form>
+```
+
+then the user will be able to type a search query, and upon hitting enter, the form will make a `GET` request to `/schedule?query=query_goes_here`
+
+Remember that a route's `loader` is called every time a `GET` request is made to that route, so to filter the tweets, we just need to grab the search query from the URL in our `loader` and filter the data accordingly!
+
+```typescript
+export let loader: LoaderFunction = ({ request }) => {
+  const url = new URL(request.url);
+  const search = new URLSearchParams(url.search);
+  return getAllTweets(search.get("query")); // Filters tweets based on the query
+};
+```
+
+Something I really like about this is that the state of the app is encoded in the URL. You can hand someone the url `/schedule?query=Remix` and the list of tweets will automatically be filtered to ones that contain the search word "Remix".
+
+One little snag, though, is that the UI won't be completely in sync with the URL if you go directly to `/schedule?query=Remix` because the search bar renders blank by default. This can easily be fixed, though! React Router provides a hook to grab the URL search params, which you can then pass as the `defaultValue` of the search bar:
+
+```jsx
+export default function Schedule() {
+  ...
+  const [params] = useSearchParams()
+
+  return (
+    <form>
+      <input type="text" name="query" placeholder="Search tweets..." defaultValue={params.get("query")} />
+    </form>
+    ...
+  )
+}
+```
+
+Now if you go straight to `/schedule?query=Remix`, the search bar will render with the word "Remix" already filled in.
+
+## Upgrading to `<Form>`
+
+By default, an HTML `<form>` will trigger a full page refresh when submitted. Because we're passing a `defaultValue` to the search bar, the search query will still be there when the user hits enter. However, they will lose focus of the search bar since they're getting a brand new document. It would be nice if the user didn't need to click on (or tab over to) the search bar again after hitting enter.
+
+Thankfully, Remix makes upgrading your forms super easy! Remix provides a `<Form>` component which emulates the behavior of the native `<form>`, but instead of triggering a full browser refresh, simply calls the loader directly with a JavaScript `fetch`. So all we need to do is replace our old `<form>` with Remix's `<Form>`.
+
+```jsx
+import { Form } from "remix";
+
+// In the component
+<Form>
+  ...
+  <input
+    type="text"
+    name="query"
+    placeholder="Search tweets..."
+    defaultValue={params.get("query")}
+  />
+</Form>;
+```
+
+Voila! No more page refresh, and no more losing focus of the search bar.
+
+## Persisting Across Route Transitions
+
+One final problem we have is persisting the filtered results across route transitions. It would feel weird to filter the tweets with the search bar, click on one, and suddenly have the tweets go back to being unfiltered.
+
+Since the list of tweets depends on the URL search parameters, we just need to make sure the search parameters stay in the URL when we click on a tweet. React Router allows you to pass search parameters to a `<Link>` or `<NavLink>` component like this:
+
+```jsx
+const location = useLocation()
+
+...
+
+// when rendering the tweets:
+<NavLink to={{ pathname: id, search: location.search }}>
+  ...
+</NavLink>
+```
+
+Now the list of tweets will stay filtered when you click on one.
+
+## Conclusion
+
+[Here](https://www.youtube.com/watch?v=WzPJWWn9HUQ) is a working demo of the search bar.
+
+I hope you found this post helpful in one way or another. If you haven't tried Remix yet, you definitely should!

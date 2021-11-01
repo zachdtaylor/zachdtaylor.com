@@ -1,8 +1,8 @@
-import { MetaFunction, LinksFunction } from "remix";
+import type { MetaFunction, LinksFunction } from "remix";
 
 import Component, {
   attributes,
-} from "../content/blog/inheritance-in-javascript.mdx";
+} from "../content/blog/building-a-simple-search-ui-with-remix.mdx";
 
 import BlogPost, { styles } from "~/components/blog-post";
 

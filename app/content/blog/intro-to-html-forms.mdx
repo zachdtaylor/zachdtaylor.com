@@ -1,0 +1,152 @@
+---
+meta:
+  date: "October 7, 2021"
+  title: "An Intro to HTML Forms"
+  description: "In this post, I explain what HTML forms are and how you can use them."
+---
+
+## What is a form?
+
+According to MDN: an HTML form represents a document section containing interactive controls for submitting information.
+
+In other words, it's the thing in your web page that lets users communicate with your server.
+
+Wait, isn't that what JavaScript is for? JavaScript is capable of many things, including sending/asking for data from your server. And these days, yes, most websites do all of that communication with JavaScript.
+
+Originally, however, communication with the server was done in HTML with forms. This is because back in the day, pretty much all websites were server-rendered and most didn't have much JavaScript on the page, if any at all. The user would hit the URL to your site, which would trigger some PHP script to put together an HTML document, and that document would be sent back to the user's browser and displayed. If you wanted the user to be able to send data back to your server, you would include a `<form>` in the document with inputs for them to interact with. When the user submits the form, that server-side PHP script would process the form data, put together a new document and send it back to the browser, which would then refresh, showing the user the new state of the page. It wasn't until AJAX (Asynchronous JavaScript And XML) was invented that people started making requests and updating the DOM client-side with JavaScript.
+
+With that history lesson out of the way, let's dive in! HTML forms are pretty simple to create: use a `<form>` tag, with `<input>` tags inside of it, like this.
+
+```html
+<form>
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <input type="submit" />
+</form>
+```
+
+Add some labels,
+
+```html
+<form>
+  <div>
+    <label for="name">Name</label>
+    <input type="text" name="name" />
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" />
+  </div>
+  <input type="submit" />
+</form>
+```
+
+and with a bit of CSS you have something that looks like this:
+
+![Screen Shot 2021-10-05 at 8.21.47 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yvurk0932hqgl7y71aye.png)
+
+The `<form>` element has a few parameters that allow you to customize its behavior. I'll go over the most commonly used parameters in this post.
+
+### The `method` Parameter
+
+By default, the `<form>` element sends data in query parameters via a GET request to the current URL. Let's assume your page is hosted at `localhost:3000`. If you were to fill out the form we created above like so,
+
+![Screen Shot 2021-05-27 at 9.08.12 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ugn576uk66n4etl6egr0.png)
+
+clicking `Submit` will make a GET request to
+
+```
+localhost:3000/?name=zach&email=zach%40gmail.com
+```
+
+If you don't want to use the GET method, you can choose to send a POST request with the `method` parameter:
+
+```diff
+-<form>
++<form method="post">
+```
+
+In this case, the browser will make a POST request to the current URL with the form data in the request body.
+
+#### Customize the POST body with `enctype`
+
+The structure of the POST body depends on the form's `enctype`. By default, `enctype="application/x-www-form-urlencoded"`. With this `enctype`, the body will take the form of a URL encoded string as you can see in the dev tools here:
+
+![Screen Shot 2021-05-27 at 9.54.13 PM](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/pi8txmn6jjk4mr89k08b.png)
+
+Another option for `enctype` is `multipart/form-data`. This value should be used if you want to send a file to the server with an `<input type="file" />`. If you keep the default `enctype`, the file won't actually be sent; the form will just send the file name as a string.
+
+The third and final `enctype` called `text/plain`, and it sends your form as plain text that looks like this:
+
+```
+name=zach
+email=zach@gmail.com
+```
+
+According to MDN, `text/plain` is mainly for debugging purposes.
+
+#### Other HTTP methods
+
+GET and POST are the only two HTTP methods you can use with forms. The other methods (PUT, PATCH, DELETE, etc.) will not work; the form will default to sending a GET request.
+
+There's a fun little trick you can do, though, if you want to send a request to your server with one of the other methods. Simply put a hidden input in your form whose value is the method you want to use:
+
+```html
+<form>
+  <input type="hidden" name="_method" value="DELETE" />
+  <div>
+    <label for="name">Name</label>
+    <input type="text" name="name" />
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" />
+  </div>
+  <input type="submit" />
+</form>
+```
+
+Then, on your server, you can parse the form data and check the value of the `_method` field to determine which type of request was sent.
+
+### The `action` Parameter
+
+What if you want to send the form data to a different URL? You can set the `action` parameter:
+
+```html
+<form action="https://zachdtaylor.com/"></form>
+```
+
+Try it out! When I submit the form, I'm taken to my website, with some additional information appended to the URL:
+
+```
+https://www.zachdtaylor.com/?name=zach&email=zach%40gmail.com
+```
+
+One situation where this would come in handy is if you wanted to redirect the user to someone else's site with some state passed in. For example, with this form, you can search Kent C. Dodd's blog on his [new website](https://kentcdodds.com):
+
+```html
+<form action="https://kentcdodds.com/blog">
+  <div>
+    <label for="q">Search Kent's Blog:</label>
+    <input type="search" name="q" />
+  </div>
+  <input type="submit" />
+</form>
+```
+
+Pretty neat! A form with an `action` argument is actually pretty similar in behavior to what a link does.
+
+```html
+<a href="https://zachdtaylor.com" />
+
+<!-- Same behavior! -->
+<form action="https://zachdtaylor.com">
+  <input type="submit" />
+</form>
+```
+
+## Conclusion
+
+If you're interested in getting to know forms a little better, try building something in the [Remix](https://remix.run/) web framework. They are embracing the old model of talking to the server with plain old HTML forms, and honestly it's a wonderful experience.
+
+I hope this was helpful. Thanks for reading!
