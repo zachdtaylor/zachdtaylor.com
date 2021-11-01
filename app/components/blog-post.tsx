@@ -1,6 +1,8 @@
+import { Link } from "remix";
 import { ThinLayout } from "./layout";
 import jsHighlightsUrl from "~/styles/js-highlights.css";
 import blogPostUrl from "~/styles/blog-post.css";
+import { BackArrowIcon } from "./icons";
 
 type BlogPostProps = {
   Component: Function;
@@ -18,6 +20,12 @@ export default function BlogPost({ Component, meta }: BlogPostProps) {
         <p className="text-gray-500 dark:text-gray-400">{meta.date}</p>
       </div>
       <Component />
+      <div className="pt-16">
+        <Link to=".." className="flex text-2xl">
+          <BackArrowIcon className="my-auto" />{" "}
+          <span className="pl-4">Back to Blog</span>
+        </Link>
+      </div>
     </ThinLayout>
   );
 }
