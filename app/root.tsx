@@ -1,12 +1,25 @@
-import type { LinksFunction } from "remix";
-import { Meta, Links, Scripts, LiveReload, Outlet } from "remix";
+import type { LinksFunction, LoaderFunction } from "remix";
+import { Meta, Links, Scripts, LiveReload, Outlet, redirect } from "remix";
 import Footer from "./components/footer";
 import NavBar from "./components/navbar";
 
 import tailwindUrl from "./styles/tailwind.css";
 
+function ensureSecure(request: Request) {
+  const proto = request.headers.get("x-forwarded-proto");
+  if (proto === "http") {
+    const secureUrl = new URL(request.url);
+    secureUrl.protocol = "https:";
+    throw redirect(secureUrl.toString());
+  }
+}
+
 export let links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindUrl }];
+};
+
+export let loader: LoaderFunction = ({ request }) => {
+  ensureSecure(request);
 };
 
 function Document({ children }: { children: React.ReactNode }) {
