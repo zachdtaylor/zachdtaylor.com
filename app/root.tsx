@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunction } from "remix";
+import { LinksFunction, LoaderFunction, useLoaderData } from "remix";
 import { Meta, Links, Scripts, LiveReload, Outlet, redirect } from "remix";
 import Footer from "./components/footer";
 import NavBar from "./components/navbar";
@@ -20,12 +20,15 @@ export let links: LinksFunction = () => {
 
 export let loader: LoaderFunction = ({ request }) => {
   ensureSecure(request);
+  return request.headers;
 };
 
 function Document({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData();
   return (
     <html lang="en">
       <head>
+        {JSON.stringify(data)}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.svg" type="image/svg" />
