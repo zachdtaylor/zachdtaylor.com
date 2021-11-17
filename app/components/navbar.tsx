@@ -44,7 +44,6 @@ function MenuIcon() {
 }
 
 export default function NavBar() {
-  const [mobileMenuActive, setMobileMenuActive] = React.useState(false);
   return (
     <nav className="md:flex flex-row p-10 px-8 md:px-20">
       <div className="flex flex-row justify-between">
@@ -52,19 +51,17 @@ export default function NavBar() {
           <Link to="/">Zach Taylor</Link>
         </div>
         <div
+          id="nav-menu-button"
           className="flex items-center md:hidden"
           role="button"
           tabIndex={0}
-          onClick={() => setMobileMenuActive((prev) => !prev)}
-          onKeyDown={() => setMobileMenuActive((prev) => !prev)}
         >
           <MenuIcon />
         </div>
       </div>
       <ul
-        className={`mt-5 border-t-2 border-gray-500 md:mt-0 md:border-t-0 md:flex flex-col md:flex-row ${
-          !mobileMenuActive && "hidden"
-        }`}
+        id="nav-list"
+        className="mt-5 border-t-2 border-gray-500 md:mt-0 md:border-t-0 hidden md:flex flex-col md:flex-row"
       >
         {LINKS.map((link) => (
           <NavBarLink key={link.to} to={link.to}>
@@ -72,6 +69,23 @@ export default function NavBar() {
           </NavBarLink>
         ))}
       </ul>
+      {/* No need to load all of React for one button */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-menu-button').onclick = () => {
+              const list = document.getElementById('nav-list')
+              if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden')
+              } else {
+                list.classList.add('hidden')
+              }
+            }
+          })
+        `,
+        }}
+      />
     </nav>
   );
 }

@@ -1,5 +1,5 @@
-import { LinksFunction, LoaderFunction, useLoaderData } from "remix";
-import { Meta, Links, Scripts, LiveReload, Outlet, redirect } from "remix";
+import { LinksFunction, LoaderFunction } from "remix";
+import { Meta, Links, LiveReload, Outlet, redirect } from "remix";
 import Footer from "./components/footer";
 import NavBar from "./components/navbar";
 
@@ -36,7 +36,6 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="dark:text-white dark:bg-gray-800 text-gray-700 h-screen flex flex-col text-lg">
         {children}
 
-        <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
@@ -59,11 +58,8 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document>
       <h1>App Error</h1>
+      <p>Oops, something went wrong. 😕</p>
       <pre>{error.message}</pre>
-      <p>
-        Replace this UI with what you want users to see when your app throws
-        uncaught errors.
-      </p>
     </Document>
   );
 }
