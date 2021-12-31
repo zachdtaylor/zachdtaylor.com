@@ -4,6 +4,7 @@ import * as improvingReactCustomHooks from "./improving-react-custom-hooks.mdx";
 import * as djangoInheritance from "./django-inheritance.mdx";
 import * as introToHTMLForms from "./intro-to-html-forms.mdx";
 import * as buildingASimpleSearchUIWithRemix from "./building-a-simple-search-ui-with-remix.mdx";
+import * as progressiveEnhancementInDjangoVsRemix from "./progressive-enhancement-in-django-vs-remix.mdx";
 // import * as gradientDescent from "./gradient-descent.mdx";
 
 type ModuleBlogPost = {
@@ -18,6 +19,7 @@ type ModuleBlogPost = {
 };
 
 const posts: Array<ModuleBlogPost> = [
+  progressiveEnhancementInDjangoVsRemix,
   introToHTMLForms,
   stableFormsInRemix,
   buildingASimpleSearchUIWithRemix,

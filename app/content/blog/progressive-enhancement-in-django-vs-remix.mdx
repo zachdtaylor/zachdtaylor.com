@@ -1,0 +1,36 @@
+---
+meta:
+  date: "December 21, 2021"
+  title: "Progressive Enhancement in Django vs Remix"
+  description: "In this post, I discuss one of my favorite things about Remix: it makes going from full SSR to SSR + client-side JavaScript completely seamless."
+---
+
+In this post, I want to tell you a quick story about one of the reasons I love Remix: super simple progressive enhancement.
+
+A couple years ago, my team at work was tasked with creating a new application that would be used internally by our sales reps. The tool needed to allow reps to quickly search through our available products and build quotes to send to customers. For various reasons, we decided to build the app with Django.
+
+Django is awesome. One thing I love about Django (and similar frameworks like Rails) is that you render your HTML server-side. The way you do this in Django is with their [Django template language](https://docs.djangoproject.com/en/3.2/ref/templates/language/), which is an extension of HTML that allows you to reuse HTML files, and embed `if` statements, `for` loops and other custom logic. Rendering HTML server-side means you can talk directly to your database and you don't have to create "API routes" to retrieve data from the browser with JavaScript.
+
+In fact, you don't have to include any JavaScript at all in your app if you don't want to. In Django, you use HTML forms for user input, which is enough to create a functional app. This is what the first version of our quoting app at work did. There was no JavaScript; it was just server-rendered HTML with HTML forms for data mutations.
+
+However, the sales team started asking for the fancier user experiences that are expected from modern applications. In other words, they were asking for some _progressive enhancement_. These modern user experiences simply can't be done without JavaScript on the page, and this is where Django's SSR model kind of left us hanging.
+
+JavaScript kind of feels like an afterthought in Django. Django's solution to JavaScript is to just do what you do on any web page: write some JavaScript in a file and include it with a `<script />` tag in your HTML. The nice thing about this is that you have full control over which JavaScript files are loaded on any given page, so your network tab stays clean.
+
+The problem with this approach is that you end up writing a lot of your server-side logic again in your JavaScript. For example, in a To-Do app, you might have a list of to-dos and a detail view that changes as you click on each one. If you want the ability to switch out the detail view client-side without making a full document request, you'll have to write some JavaScript to 1) make a request to your server to get the to-do data and 2) manually replace the old detail view in the DOM, thereby duplicating some of the render logic that was in your Django template. This also means you have to add an API route for the JavaScript to talk to. This one example is not a ton of extra work, but it can add up quickly and get messy if you need a lot of interactivity.
+
+We eventually needed enough interactivity in our quoting app that it was pretty difficult to maintain. We decided it would make our lives easier as developers to convert the entire front end to a React SPA and just use Django for the API routes and talking to the database. This solved our maintenance problems, and handling data was made easy with React Query, but I still felt like we had lost something.
+
+For one, we were now sending a lot more JavaScript across the network because all of our app logic was now client-side. For two, we now had request waterfalls and spinners all over the place, instead of a single document load with all the data already there.
+
+It was around the time I was thinking about these problems that I heard about Remix. I bought a supporter license and dove in, and I immediately knew it was the solution I was looking for.
+
+Remix gives you all the benefits of server-side rendering while also making the transition to interactivity on the client _completely seamless_. All it takes is one `<Script />` element in your root route and boom, your app is now running React in the browser, doing client-side route transitions. There's no need to write any new logic at all. No extra JavaScript, no API routes, nothing. This is due to a couple things. First, since React can render HTML on the server and run in the browser, you don't have to re-create your server-rendering logic on the client. So instead of using a template language on the server and JavaScript in the browser, I can just write React code once and use it in both places. Second, Remix takes care of creating and calling API routes for you. Your `loader` functions are used during the initial server render, and they are automatically made available as endpoints and called from the client on page or layout transitions.
+
+Remix also lets you control _which pages_ are interactive. If one page needs JavaScript but another doesn't, you can include JavaScript only on the page that needs it. This allows me to retain a lot of that control over the network tab that I had in Django.
+
+If you want to get fancy with forms and do form submissions client-side without a document refresh, you just have to switch from `<form>` to Remix's `<Form>`. Remix will then prevent the default refresh behavior, call an endpoint that runs your `action` for that route, and call all the loaders for that route so the data on the page stays up to date. It's the same behavior the browser gives you, but without the page refresh!
+
+And therein lies the reason I love Remix's approach to progressive enhancement so much. Remix doesn't stray too far from the default browser behavior, which not only means you can fall back on default browser behavior if your user has a spotty connection and JavaScript fails to load, but you also learn to think in terms of how the browser behaves, which is transferrable knowledge you can use outside of Remix.
+
+There are so many things I love about Remix, but the way it makes progressively enhancing apps with JavaScript so easy is one of my favorite things about it. Thanks for reading. 🙂
