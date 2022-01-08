@@ -1,0 +1,56 @@
+---
+meta:
+  date: "January 7, 2022"
+  title: "Some Thoughts on Server State in Remix"
+  description: "In this post, I talk about how Remix handles server state
+  and why it's so easy to work with."
+---
+
+I was a Remix meetup in Utah last night. At the meetup, [Kent](https://twitter.com/kentcdodds) gave a talk in which he said that one great thing about Remix is that he doesn't have to think too much about state when using it. Afterwards, someone at the meetup asked me what he meant. It seems weird that you wouldn't have to think about state. Isn't state, like, a huge part of building an app?
+
+To answer this question, it's important to know that it's not that you don't use state when building a Remix app. Rather, the framework just takes care of a lot of it for you. Here's what I mean by that.
+
+A huge source of state in React applications is server state. The typical way to handle server state is to fetch it from the server with JavaScript and then use React Query or something similar to cache the resulting data client-side. All of that requires thought on your part. You need to understand how to use whatever caching library you're using. If you make a data mutation, you have to keep track of which queries/data to invalidate. You need to show error messages if there's an error. It's a lot to think about.
+
+With Remix, you don't have to think about any of that. All you have to do is return the data you need in your loaders and grab that data with `useLoaderData`. When you send a mutation, you don't have to invalidate anything; the data on the page gets updated automatically. When you define `CatchBoundary` and `ErrorBoundary` components for error handling, you don't have to think about when to render them; Remix will render them at the right time for you.
+
+So how exactly does this work? Where does Remix store the data for the page? And how does Remix know when to update it?
+
+If you don't have JavaScript on the page, then there's nowhere for Remix to store the data. The HTML page itself is effectively the "store", and when you mutate data with a form, the page is refreshed, a server-side render happens, and you get refreshed data. This is how browsers work by default.
+
+If you have JavaScript on the page, then Remix stores your data in a global context and provides a few ways for you to access it.
+
+The first way, as mentioned, is `useLoaderData`. This hook will grab the data returned by the loader for the specific route you call the hook from. For example:
+
+```typescript
+// routes/recipies.tsx
+export const loader: LoaderFunction = () => {
+  // return some data
+};
+
+export default function Recipies() {
+  // This will grab the data returned from the above loader.
+  const data = useLoaderData();
+
+  // Or, you could move the `useLoaderData` inside
+  // `RecipieCard` instead of passing `data` as a prop.
+  // Since the `Recipies` route is the closest to
+  // `RecipieCard` in the component tree,
+  // you'll get this loader's data.
+  return <RecipieCard data={data} />;
+}
+```
+
+The second way is `useMatches`. This hook will give you all the data for every route that matches the current URL, so you can grab the data for any route that is currently rendered on the screen.
+
+There is also a third way that [might be added](https://github.com/remix-run/remix/pull/1281) to Remix in the near future, called `useRouteData`. This hook will allow you to get data from a specific route by passing a route id.
+
+You can also grab data from any loader (even ones that are not part of the current route) with `useFetcher().load`. However, unlike `useLoaderData` and `useMatches`, this data will not come from the global context and instead, `useFetcher().load` will send a network request to get the data and store it locally, just like you might do with `fetch`.
+
+If you submit a form with `<Form />` or call an action with `useFetcher().submit`, Remix will call all the loaders for the current route and update the global context for you. You don't have to think about it! What's cool about this is that Remix is just emulating regular browser behavior here. Again, if there were no JavaScript on the page, the browser would do a full page refresh, which would call all the loaders for the current route, and you'd get a fresh HTML document with fresh data. This is exactly what Remix is doing, just with JavaScript so there's no page refresh.
+
+And for error handling, all you have to do is export an `ErrorBoundary` component for unexpected errors, and a `CatchBoundary` component for errors you throw yourself, and if there are any errors, Remix will display the error UI in place of the regular UI for that route automatically, without you having to think about it.
+
+Doing things the Remix way does require a bit of a mindset shift. You have to think about data and errors in terms of your routes. Whenever you call `useLoaderData`, you will get the data for the nearest route in the component tree. The `ErrorBoundary` and `CatchBoundary` display in place of the UI for whatever route they're defined in. But reframing things in terms of routes enables a lot, and it's what makes Remix so special and easy to use.
+
+Thanks for reading.
