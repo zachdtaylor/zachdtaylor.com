@@ -1,4 +1,4 @@
-import type { MetaFunction, LinksFunction } from "remix";
+import type { MetaFunction, LinksFunction, HeadersFunction } from "remix";
 import { ThinLayout } from "~/components/layout";
 import blogPostUrl from "~/styles/blog-post.css";
 import Component from "../content/about.mdx";
@@ -12,6 +12,12 @@ export let meta: MetaFunction = () => {
 
 export let links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: blogPostUrl }];
+};
+
+export let headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=60",
+  };
 };
 
 export default function About() {
