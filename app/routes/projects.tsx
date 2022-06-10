@@ -16,6 +16,12 @@ export default function Projects() {
       <ul>
         <ItemPreview
           external
+          to="https://birdie.fly.dev/"
+          title="schmerdle"
+          description="A wordle clone written completely with Phoenix LiveView."
+        />
+        <ItemPreview
+          external
           to="https://github.com/zachtylr21/use-async-machine"
           title="use-async-machine"
           description="A hook for using an async state machine"
