@@ -21,6 +21,12 @@ export default function Talks() {
           description="In this talk I over two things that have greatly helped me improve the quality of my React code: custom hooks and react-query."
           date="March 31, 2021"
         />
+        <ItemPreview
+          to="/blog/building-a-simple-search-ui-with-remix"
+          title="Building a Simple Search UI with Remix"
+          description="I gave this talk at a Remix Utah meetup. Unfortunately, it was not recorded, but it was essentially a talk version of the blog post you can find by clicking the title above."
+          date="June 2, 2022"
+        />
       </ul>
     </ThinLayout>
   );
