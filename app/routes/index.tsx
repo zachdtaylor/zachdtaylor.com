@@ -1,13 +1,12 @@
-import type { MetaFunction } from "remix";
 import Layout from "~/components/layout";
 import Logo from "~/components/logo";
 
-export let meta: MetaFunction = () => {
+export function meta() {
   return {
     title: "Home",
     description: "Come see what Zach Taylor has to offer.",
   };
-};
+}
 
 function HomeHero() {
   return (

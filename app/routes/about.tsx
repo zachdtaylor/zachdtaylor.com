@@ -1,18 +1,18 @@
-import type { MetaFunction, LinksFunction, HeadersFunction } from "remix";
 import { ThinLayout } from "~/components/layout";
 import blogPostUrl from "~/styles/blog-post.css";
 import Component from "../content/about.mdx";
+import { HeadersFunction } from "@remix-run/node";
 
-export let meta: MetaFunction = () => {
+export function meta() {
   return {
     title: "About",
     description: "Learn more about Zach Taylor.",
   };
-};
+}
 
-export let links: LinksFunction = () => {
+export function links() {
   return [{ rel: "stylesheet", href: blogPostUrl }];
-};
+}
 
 export let headers: HeadersFunction = () => {
   return {

@@ -1,9 +1,9 @@
-import { LinksFunction, LoaderFunction } from "remix";
-import { Meta, Links, LiveReload, Outlet, redirect } from "remix";
+import { LoaderArgs, redirect } from "@remix-run/node";
 import Footer from "./components/footer";
 import NavBar from "./components/navbar";
 
 import tailwindUrl from "./styles/tailwind.css";
+import { Links, LiveReload, Meta, Outlet } from "@remix-run/react";
 
 function ensureSecure(request: Request) {
   const proto = request.headers.get("x-forwarded-proto");
@@ -14,14 +14,14 @@ function ensureSecure(request: Request) {
   }
 }
 
-export let links: LinksFunction = () => {
+export function links() {
   return [{ rel: "stylesheet", href: tailwindUrl }];
-};
+}
 
-export let loader: LoaderFunction = ({ request }) => {
+export function loader({ request }: LoaderArgs) {
   ensureSecure(request);
   return null;
-};
+}
 
 function Document({ children }: { children: React.ReactNode }) {
   return (

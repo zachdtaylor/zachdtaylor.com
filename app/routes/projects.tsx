@@ -1,13 +1,12 @@
-import type { MetaFunction } from "remix";
 import { ThinLayout } from "~/components/layout";
 import { ItemPreview } from "~/components/lib";
 
-export let meta: MetaFunction = () => {
+export function meta() {
   return {
     title: "Projects",
     description: "Check out Zach Taylor's projects.",
   };
-};
+}
 
 export default function Projects() {
   return (

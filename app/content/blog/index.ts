@@ -20,6 +20,17 @@ type ModuleBlogPost = {
 };
 
 const posts: Array<ModuleBlogPost> = [
+  {
+    filename: "leading-order-behavior",
+    attributes: {
+      meta: {
+        title: "Leading Order Behavior",
+        date: "April 14, 2023",
+        description:
+          "In this post, I discuss why it's worth paying attention to the leading order behavior of your algorithms.",
+      },
+    },
+  },
   someThoughtsOnServerStateInRemix,
   progressiveEnhancementInDjangoVsRemix,
   introToHTMLForms,

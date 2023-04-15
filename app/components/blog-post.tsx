@@ -1,8 +1,8 @@
-import { Link } from "remix";
 import { ThinLayout } from "./layout";
 import jsHighlightsUrl from "~/styles/js-highlights.css";
 import blogPostUrl from "~/styles/blog-post.css";
 import { BackArrowIcon } from "./icons";
+import { Link } from "@remix-run/react";
 
 type BlogPostProps = {
   Component: Function;
