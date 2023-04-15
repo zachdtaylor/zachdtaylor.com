@@ -15066,6 +15066,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     break-inside: avoid-page;
   }
 }
+.back-link:hover {
+  color: rgba(124, 58, 237);
+}
+.h-0 {
+  height: 0px;
+}
 </style>
 
 <!-- Load mathjax -->
@@ -15103,13 +15109,13 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </script>
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-
+<a href="/blog" class="back-link">&#8592; Back to Blog</a>
 <div id="cell-id=bc8cf95d-8803-4f75-bc4a-f1cc18334807" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput h-0" data-mime-type="text/markdown">
 <p>$\newcommand\norm[1]{\lVert#1\rVert}$
 $\newcommand\b[1]{\textbf{#1}}$</p>
 
@@ -15125,7 +15131,7 @@ $\newcommand\b[1]{\textbf{#1}}$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Leading-Order-Behavior">Leading Order Behavior<a class="anchor-link" href="#Leading-Order-Behavior">&#182;</a></h1><p>The term &quot;leading order behavior&quot; refers to the leading coefficient on the complexity of an algorithm.</p>
 <p>A lot of the time, people are only interested in the big-O behavior of an algorithm. The big-O behavior is useful, but the leading coefficient makes a difference, too. For example, $n^2$ and $100n^2$ are both $O(n^2)$, but obviously one is much bigger than the other.</p>
-<p>In this notebook, we're going to walk through and example that illustrates the importance of the leading coefficient in terms of floating point operations (FLOPs) and execution time.</p>
+<p>In this notebook, we're going to walk through an example that illustrates the importance of the leading coefficient in terms of floating point operations (FLOPs) and execution time.</p>
 <h2 id="First,-Some-Definitions">First, Some Definitions<a class="anchor-link" href="#First,-Some-Definitions">&#182;</a></h2><p><strong>Definition 1</strong> Let $S$ be either $\mathbb{R}$ or $\mathbb{Z}^+$ and let $f : S \rightarrow \mathbb{R}$ and $g : S \rightarrow \mathbb{R}$. We say that $f(n)$ is <em>asymptotically equivalent</em> to $g(n)$, denoted $f(n) \sim g(n)$ as $n \rightarrow \infty$ if</p>
 $$\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = 1$$<p>Notationally, we often drop the $n \rightarrow \infty$ part and just write $f(n) \sim g(n)$. An example of this would be $3n^2 - n + 1 \sim 3n^2$, because</p>
 $$\lim_{n \rightarrow \infty} \frac{3n^2 - n + 1}{3n^2} = \lim_{n \rightarrow \infty} 1 - \frac{1}{3n} + \frac{1}{3n^2} = 1$$<p>Note that the leading coefficient makes a difference here, which is different from big-O. For example, $3n^2 \in O(n^2)$, but $3n^2$ is not asymptotically equivalent to $n^2$.</p>

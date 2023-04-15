@@ -6,6 +6,7 @@ type ItemPreviewProps = {
   title: string;
   description: string;
   date?: string;
+  isJupyter?: boolean;
 };
 
 export function ItemPreview({
@@ -14,6 +15,7 @@ export function ItemPreview({
   title,
   date,
   description,
+  isJupyter,
 }: ItemPreviewProps) {
   const linkClassName = "text-2xl hover:text-purple-400";
   return (
@@ -24,7 +26,10 @@ export function ItemPreview({
         </a>
       ) : (
         <Link to={to} className={linkClassName}>
-          {title}
+          {title}{" "}
+          <span className="text-gray-500 text-sm">
+            {isJupyter ? "(Jupyter Notebook)" : ""}
+          </span>
         </Link>
       )}
       {date && <p className="text-gray-500 dark:text-gray-400">{date}</p>}

@@ -15,6 +15,7 @@ type ModuleBlogPost = {
       title: string;
       date: string;
       description: string;
+      isJupyter?: boolean;
     };
   };
 };
@@ -28,6 +29,7 @@ const posts: Array<ModuleBlogPost> = [
         date: "April 14, 2023",
         description:
           "In this post, I discuss why it's worth paying attention to the leading order behavior of your algorithms.",
+        isJupyter: true,
       },
     },
   },
@@ -54,6 +56,7 @@ export type BlogPost = {
   title: string;
   date: string;
   description: string;
+  isJupyter?: boolean;
 };
 
 const transformedPosts = posts.map(postFromModule);

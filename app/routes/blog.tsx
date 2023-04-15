@@ -1,5 +1,3 @@
-import type { BlogPost } from "~/content/blog";
-
 import { ThinLayout } from "~/components/layout";
 import { ItemPreview } from "~/components/lib";
 import posts from "~/content/blog";
