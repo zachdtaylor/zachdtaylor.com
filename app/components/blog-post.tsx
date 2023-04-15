@@ -21,7 +21,7 @@ export default function BlogPost({ Component, meta }: BlogPostProps) {
       </div>
       <Component />
       <div className="pt-16">
-        <Link to=".." className="flex text-2xl">
+        <Link to="/blog" className="flex text-2xl">
           <BackArrowIcon className="my-auto" />{" "}
           <span className="pl-4">Back to Blog</span>
         </Link>
