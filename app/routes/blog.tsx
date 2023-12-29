@@ -4,10 +4,10 @@ import posts from "~/content/blog";
 import { useLoaderData } from "@remix-run/react";
 
 export function meta() {
-  return {
-    title: "Blog",
-    description: "Read Zach Taylor's blog.",
-  };
+  return [
+    { title: "Blog" },
+    { name: "description", content: "Read Zach Taylor's blog." },
+  ];
 }
 
 export function loader() {

@@ -2,10 +2,10 @@ import Layout from "~/components/layout";
 import Logo from "~/components/logo";
 
 export function meta() {
-  return {
-    title: "Home",
-    description: "Come see what Zach Taylor has to offer.",
-  };
+  return [
+    {title: "Home"},
+    {name: "description", content: "Come see what Zach Taylor has to offer." },
+  ];
 }
 
 function HomeHero() {

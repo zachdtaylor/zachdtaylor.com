@@ -1,5 +1,5 @@
 export function meta() {
-  return { title: "Ain't nothing here" };
+  return [{ title: "Ain't nothing here" }];
 }
 
 export default function FourOhFour() {

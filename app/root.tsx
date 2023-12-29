@@ -1,9 +1,9 @@
-import { LoaderArgs, redirect } from "@remix-run/node";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import Footer from "./components/footer";
 import NavBar from "./components/navbar";
 
-import tailwindUrl from "./styles/tailwind.css";
-import { Links, LiveReload, Meta, Outlet } from "@remix-run/react";
+import tailwindUrl from "~/styles/tailwind.css";
+import { Links, LiveReload, Meta, Outlet, useRouteError } from "@remix-run/react";
 
 function ensureSecure(request: Request) {
   const proto = request.headers.get("x-forwarded-proto");
@@ -18,7 +18,7 @@ export function links() {
   return [{ rel: "stylesheet", href: tailwindUrl }];
 }
 
-export function loader({ request }: LoaderArgs) {
+export function loader({ request }: LoaderFunctionArgs) {
   ensureSecure(request);
   return null;
 }
@@ -54,12 +54,14 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
+export function ErrorBoundary() {
+  const error = useRouteError();
+
   return (
     <Document>
       <h1>App Error</h1>
       <p>Oops, something went wrong. 😕</p>
-      <pre>{error.message}</pre>
+      <pre>{error instanceof Error ? error.message : null}</pre>
     </Document>
   );
 }

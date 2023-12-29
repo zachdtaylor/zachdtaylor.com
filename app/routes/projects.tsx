@@ -2,10 +2,10 @@ import { ThinLayout } from "~/components/layout";
 import { ItemPreview } from "~/components/lib";
 
 export function meta() {
-  return {
-    title: "Projects",
-    description: "Check out Zach Taylor's projects.",
-  };
+  return [
+    { title: "Projects" },
+    { name: "description", content: "Check out Zach Taylor's projects." },
+  ];
 }
 
 export default function Projects() {

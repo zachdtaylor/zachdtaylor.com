@@ -1,11 +1,12 @@
+import { convertToMetaTags } from "~/utils";
 import Component, {
   attributes,
-} from "../content/blog/progressive-enhancement-in-django-vs-remix.mdx";
+} from "../content/blog/building-a-simple-search-ui-with-remix.mdx";
 
 import BlogPost, { styles } from "~/components/blog-post";
 
 export function meta() {
-  return attributes.meta;
+  return convertToMetaTags(attributes.meta);
 }
 
 export function links() {

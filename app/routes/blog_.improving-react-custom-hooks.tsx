@@ -1,11 +1,12 @@
+import { convertToMetaTags } from "~/utils";
 import Component, {
   attributes,
-} from "../content/blog/stable-forms-in-remix.mdx";
+} from "../content/blog/improving-react-custom-hooks.mdx";
 
 import BlogPost, { styles } from "~/components/blog-post";
 
 export function meta() {
-  return attributes.meta;
+  return convertToMetaTags(attributes.meta);
 }
 
 export function links() {

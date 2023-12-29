@@ -4,10 +4,10 @@ import Component from "../content/about.mdx";
 import { HeadersFunction } from "@remix-run/node";
 
 export function meta() {
-  return {
-    title: "About",
-    description: "Learn more about Zach Taylor.",
-  };
+  return [
+    { title: "About" },
+    { name: "description", content: "Learn more about Zach Taylor." },
+  ];
 }
 
 export function links() {
