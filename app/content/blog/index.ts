@@ -22,6 +22,18 @@ type ModuleBlogPost = {
 
 const posts: Array<ModuleBlogPost> = [
   {
+    filename: "k-means-clustering",
+    attributes: {
+      meta: {
+        title: "K-Means Clustering",
+        date: "December 29, 2023",
+        description:
+          "In this post, we learn about metric spaces, clustering, and the K-Means clustering algorithm. We implement the algorithm in Python and show a couple applications.",
+        isJupyter: true,
+      },
+    },
+  },
+  {
     filename: "leading-order-behavior",
     attributes: {
       meta: {

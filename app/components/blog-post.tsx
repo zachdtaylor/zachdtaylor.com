@@ -5,7 +5,7 @@ import { BackArrowIcon } from "./icons";
 import { Link } from "@remix-run/react";
 
 type BlogPostProps = {
-  Component: Function;
+  Component: () => JSX.Element;
   meta: {
     title: string;
     date: string;
