@@ -15,6 +15,12 @@ export default function Projects() {
       <ul>
         <ItemPreview
           external
+          to="https://zerotomastery.io/courses/learn-remix-run/"
+          title="Remix Bootcamp: Zero to Mastery"
+          description="I created an online course about Remix, a React framework for building web apps. It's my personal favorite javascript framework and I think learning it will enhance any developer's career."
+        />
+        <ItemPreview
+          external
           to="https://birdie.fly.dev/"
           title="schmerdle"
           description="A wordle clone written completely with Phoenix LiveView."
